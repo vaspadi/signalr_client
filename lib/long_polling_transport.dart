@@ -180,7 +180,10 @@ class LongPollingTransport implements ITransport {
       _logger
           ?.finest("(LongPolling transport) sending DELETE request to $_url.");
 
-      final deleteOptions = SignalRHttpRequest();
+      final deleteOptions = SignalRHttpRequest(
+        headers: _headers ?? MessageHeaders(),
+      );
+
       final token = await _getAccessToken();
       _updateHeaderToken(deleteOptions, token);
       await _httpClient.delete(_url, options: deleteOptions);
